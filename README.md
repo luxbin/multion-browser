@@ -46,7 +46,7 @@ Create a chromium directory for the checkout and change to it. You can call this
 
 ```
 $ mkdir chromium && cd chromium
-$ fetch --nohooks --no-history chrome
+$ fetch --nohooks --no-history chromium
 ```
 It will take around 30 ~ 60 mins. (depends on internet speed)
 
