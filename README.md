@@ -4,19 +4,36 @@
 - An appropriate version of Visual Studio, as described below.
 Windows 10 or newer.
 
-## Setting up Windows
+## 1. Install Visual Studio 2022 Professional
+
+https://visualstudio.microsoft.com/downloads/
+
+![Download vs2022 professional](./Images/download-vs2022-professional.jpg)
+
 Chromium requires Visual Studio 2022 (>=17.0.0) to build. Visual Studio can also be used to debug Chromium. The clang-cl compiler is used but Visual Studio's header files, libraries, and some tools are required. Visual Studio Community Edition should work if its license is appropriate for you. You must install the “Desktop development with C++” component and the “MFC/ATL support” sub-components. This can be done from the command line by passing these arguments to the Visual Studio installer. In my case, I installed Visual Studio 2022 Professional.
 
 ![Visual Studio 2022 installer setting](./Images/visual-studio.png)
 
-Required
+## 2. Update Debugging Tools for Windows
 
 Windows 11 SDK version 10.0.22621.2428. This can be installed separately or by checking the appropriate box in the Visual Studio Installer.
-(Windows 11) SDK Debugging Tools 10.0.22621.755 or higher. This version of the Debugging tools is needed in order to support reading the large-page PDBs that Chrome uses to allow greater-than 4 GiB PDBs. This can be installed after the matching Windows SDK version is installed, from: Control Panel -> Programs and Features -> Windows Software Development Kit [version] -> Change -> Debugging Tools for Windows. If building on ARM64 Windows then you will need to manually copy the Debuggers\x64 directory from another machine because it does not get installed on ARM64 and is needed, whether you are building Chromium for x64 or ARM64 on ARM64.
+(Windows 11) SDK Debugging Tools 10.0.22621.755 or higher. This version of the Debugging tools is needed in order to support reading the large-page PDBs that Chrome uses to allow greater-than 4 GiB PDBs. This can be installed after the matching Windows SDK version is installed, from: 
+
+Control Panel -> Programs and Features -> Windows Software Development Kit [version] -> Change -> Debugging Tools for Windows. 
+
+If building on ARM64 Windows then you will need to manually copy the Debuggers\x64 directory from another machine because it does not get installed on ARM64 and is needed, whether you are building Chromium for x64 or ARM64 on ARM64.
 
 ![Debugging Tools for Windows](./Images/debugging-tools.png)
 
-##Install depot_tools
+## 3. Set windows system environment variable for vs2022
+
+Also, add a DEPOT_TOOLS_WIN_TOOLCHAIN environment variable in the same way, and set it to 0. This tells depot_tools to use your locally installed version of Visual Studio (by default, depot_tools will try to use a google-internal version).
+
+You may also have to set variable vs2022_install to your installation path of Visual Studio 2022, like set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Professional.
+
+![Environment variable for windows](./Images/windows-environment.png)
+
+## Install depot_tools
 Download the [depot_tools bundle](https://storage.googleapis.com/chrome-infra/depot_tools.zip) and extract it somewhere (eg: C:\src\depot_tools).
 
 Warning: DO NOT use drag-n-drop or copy-n-paste extract from Explorer, this will not extract the hidden “.git” folder which is necessary for depot_tools to autoupdate itself. You can use “Extract all…” from the context menu though.
@@ -28,11 +45,6 @@ Add depot_tools to the start of your PATH (must be ahead of any installs of Pyth
 - If you don't have Administrator access, you can add a user-level PATH environment variable by opening: Control Panel → System and Security → System → Search for “Edit environment variables for your account”
 - Add C:\src\depot_tools at the front. Note: If your system PATH has a Python in it, you will be out of luck.
 
-Also, add a DEPOT_TOOLS_WIN_TOOLCHAIN environment variable in the same way, and set it to 0. This tells depot_tools to use your locally installed version of Visual Studio (by default, depot_tools will try to use a google-internal version).
-
-You may also have to set variable vs2022_install to your installation path of Visual Studio 2022, like set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Professional.
-
-![Environment variable for windows](./Images/windows-environment.png)
 
 ```
 $ gclient
@@ -64,6 +76,12 @@ It will take some mins.
 ```
 $ gclient sync -D
 $ gclient runhooks
+```
+
+```
+git status
+git add --all
+git reset --hard HEAD
 ```
 
 ## Setting up the build
