@@ -8,11 +8,11 @@ Windows 10 or newer.
 
 https://visualstudio.microsoft.com/downloads/
 
-![Download vs2022 professional](./Images/download-vs2022-professional.jpg)
+![Download vs2022 professional](./img_win/download-vs2022-professional.jpg)
 
 Chromium requires Visual Studio 2022 (>=17.0.0) to build. Visual Studio can also be used to debug Chromium. The clang-cl compiler is used but Visual Studio's header files, libraries, and some tools are required. Visual Studio Community Edition should work if its license is appropriate for you. You must install the “Desktop development with C++” component and the “MFC/ATL support” sub-components. This can be done from the command line by passing these arguments to the Visual Studio installer. In my case, I installed Visual Studio 2022 Professional.
 
-![Visual Studio 2022 installer setting](./Images/visual-studio.png)
+![Visual Studio 2022 installer setting](./img_win/visual-studio.png)
 
 ## 2. Update Debugging Tools for Windows
 
@@ -23,7 +23,7 @@ Control Panel -> Programs and Features -> Windows Software Development Kit [vers
 
 If building on ARM64 Windows then you will need to manually copy the Debuggers\x64 directory from another machine because it does not get installed on ARM64 and is needed, whether you are building Chromium for x64 or ARM64 on ARM64.
 
-![Debugging Tools for Windows](./Images/debugging-tools.png)
+![Debugging Tools for Windows](./img_win/debugging-tools.png)
 
 ## 3. Set windows system environment variable for vs2022
 
@@ -31,7 +31,7 @@ Also, add a DEPOT_TOOLS_WIN_TOOLCHAIN environment variable in the same way, and 
 
 You may also have to set variable vs2022_install to your installation path of Visual Studio 2022, like set vs2022_install=C:\Program Files\Microsoft Visual Studio\2022\Professional.
 
-![Environment variable for windows](./Images/windows-environment.png)
+![Environment variable for windows](./img_win/windows-environment.png)
 
 ## Install depot_tools
 Download the [depot_tools bundle](https://storage.googleapis.com/chrome-infra/depot_tools.zip) and extract it somewhere (eg: C:\src\depot_tools).
@@ -107,7 +107,7 @@ blink_symbol_level = 0
 symbol_level = 0
 ```
 
-![args.gn](./Images/args.gn.png)
+![args.gn](./img_win/args.gn.png)
 
 We need to build the checked out chromium first before multion browser patch.
 
@@ -144,10 +144,10 @@ $ autoninja -C out\release chrome
 It will take some mins and you can see multion.exe in out/release folder.
 
 Then copy the unpacked multion extension files to the out/release folder.
-![multion-extension-folder](./Images/multion-extension-folder.png)
+![multion-extension-folder](./img_win/multion-extension-folder.png)
 
 If you changed the name of the copied multion extension folder, you should also change it in chrome/installer/mini_installer/chrome.release. This needs for MultiOn Browser Installer.
-![chrome.release](./Images/chrome.release.png)
+![chrome.release](./img_win/chrome.release.png)
 
 Now you run multion.exe so you can see MultiOn Browser with multion extension.
 
