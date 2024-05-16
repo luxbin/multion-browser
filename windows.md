@@ -1,10 +1,10 @@
-## System requirements
+# System requirements
 - A 64-bit Intel machine with at least 8GB of RAM. More than 16GB is highly recommended.
 - At least 100GB of free disk space on an NTFS-formatted hard drive. FAT32 will not work, as some of the Git packfiles are larger than 4GB.
 - An appropriate version of Visual Studio, as described below.
 Windows 10 or newer.
 
-## 1. Install Visual Studio 2022 Professional
+# 1. Install Visual Studio 2022 Professional
 
 https://visualstudio.microsoft.com/downloads/
 
@@ -14,7 +14,7 @@ Chromium requires Visual Studio 2022 (>=17.0.0) to build. Visual Studio can also
 
 ![Visual Studio 2022 installer setting](./img_win/visual-studio.png)
 
-## 2. Update Debugging Tools for Windows
+# 2. Update Debugging Tools for Windows
 
 Windows 11 SDK version 10.0.22621.2428. This can be installed separately or by checking the appropriate box in the Visual Studio Installer.
 (Windows 11) SDK Debugging Tools 10.0.22621.755 or higher. This version of the Debugging tools is needed in order to support reading the large-page PDBs that Chrome uses to allow greater-than 4 GiB PDBs. This can be installed after the matching Windows SDK version is installed, from: 
@@ -25,7 +25,7 @@ If building on ARM64 Windows then you will need to manually copy the Debuggers\x
 
 ![Debugging Tools for Windows](./img_win/debugging-tools.png)
 
-## 3. Set windows system environment variable for vs2022
+# 3. Set windows system environment variable for vs2022
 
 Also, add a DEPOT_TOOLS_WIN_TOOLCHAIN environment variable in the same way, and set it to 0. This tells depot_tools to use your locally installed version of Visual Studio (by default, depot_tools will try to use a google-internal version).
 
@@ -33,7 +33,7 @@ You may also have to set variable vs2022_install to your installation path of Vi
 
 ![Environment variable for windows](./img_win/windows-environment.png)
 
-## Install depot_tools
+# 4. Install depot_tools
 Download the [depot_tools bundle](https://storage.googleapis.com/chrome-infra/depot_tools.zip) and extract it somewhere (eg: C:\src\depot_tools).
 
 Warning: DO NOT use drag-n-drop or copy-n-paste extract from Explorer, this will not extract the hidden “.git” folder which is necessary for depot_tools to autoupdate itself. You can use “Extract all…” from the context menu though.
@@ -54,6 +54,7 @@ On first run, gclient will install all the Windows-specific bits needed to work 
 If you run gclient from a non-cmd shell (e.g., cygwin, PowerShell), it may appear to run properly, but msysgit, python, and other tools may not get installed correctly.
 If you see strange errors with the file system on the first run of gclient, you may want to [disable Windows Indexing](https://tortoisesvn.net/faq.html#cantmove2).
 
+# 5. Fetch Chromium
 Create a chromium directory for the checkout and change to it. You can call this whatever you like and put it wherever you like, as long as the full path has no spaces. However there are some performance benefits for Googlers in placing the directory under C:\src\ (See Why is my build slow?).
 
 ```
@@ -61,6 +62,9 @@ $ mkdir chromium && cd chromium
 $ fetch --nohooks --no-history chromium
 ```
 It will take around 30 ~ 60 mins. (depends on internet speed)
+
+
+# 6. Checkout
 
 Then we need to check out the specific commit that MultiOnBrowser is based on.
 
@@ -73,18 +77,21 @@ $ git checkout ecbf498e2027dad6dd44ef472b88ad59a0823bb8
 
 It will take some mins.
 
+# 7. Synchronize the Source Code
+
 ```
 $ gclient sync -D
 $ gclient runhooks
 ```
 
+# 8. Clean untracked files.
 ```
-git status
-git add --all
-git reset --hard HEAD
+$ git status
+$ git add --all
+$ git reset --hard HEAD
 ```
 
-## Setting up the build
+# 9. Setting up the build
 
 Chromium uses Ninja as its main build tool along with a tool called GN to generate .ninja files. You can create any number of build directories with different configurations. To create a build directory:
 
@@ -109,6 +116,8 @@ symbol_level = 0
 
 ![args.gn](./img_win/args.gn.png)
 
+# 10. Build chromium
+
 We need to build the checked out chromium first before multion browser patch.
 
 ```
@@ -121,7 +130,7 @@ When the build is finished, you can see chrome.exe in out/release folder.
 
 You must get the successful build and you have to check build environment again.
 
-## Apply the patches for MultiOn Browser
+# 11. Apply the patches for multion and rebuild
 
 Run git command in chromium/src folder.
 
@@ -151,7 +160,7 @@ If you changed the name of the copied multion extension folder, you should also 
 
 Now you run multion.exe so you can see MultiOn Browser with multion extension.
 
-## Make Multion Browser Installer
+# 12. Build Multion Browser Installer
 
 ```
 $ autoninja -C out\release mini_installer
