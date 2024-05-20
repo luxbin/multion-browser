@@ -124,7 +124,7 @@ We need to build the checked out chromium first before multion browser patch.
 $ autoninja -C out\release chrome
 ```
 
-It will take several hours. (depends on pc performance)
+It will take several hours. (depends on the PC performance)
 
 When the build is finished, you can see chrome.exe in out/release folder. 
 
