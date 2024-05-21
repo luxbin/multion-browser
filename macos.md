@@ -62,7 +62,7 @@ $ git reset --hard HEAD
 Chromium uses Ninja as its main build tool along with a tool called GN to generate .ninja files. You can create any number of build directories with different configurations. To create a build directory:
 
 ```
-gn gen out\release
+gn gen out/release
 ```
 
 After "gn gen" command is executed, it will generated out\release folder and some files.
@@ -87,7 +87,7 @@ symbol_level = 0
 We need to build the checked out chromium first before multion browser patch.
 
 ```
-$ autoninja -C out\release chrome
+$ autoninja -C out/release chrome
 ```
 
 It will take several hours. (depends on the PC performance)
@@ -108,13 +108,51 @@ It must run without any errors.
 
 ```
 $ git apply multion-macos.patch
+
+$ git status
 ```
 After this, you can check the modified files with git status command.
 
 We need to build again with new patches.
 
 ```
-$ autoninja -C out\release chrome
+$ autoninja -C out/release chrome
 ```
 It will take some mins and you can see MultiOn.app in out/release folder.
+
+# 9. Include the Mullion extension files in MultiOn.app
+
+We need to check what extension folder name is set in the source code.
+
+You can open extension_service.cc file in TextEdit.
+
+```
+chromium/src/chrome/browser/extensions/extension_service.cc
+```
+
+![extension_service.cc](./img_mac/extension_service.png)
+
+Then you find the string "../Resources" and can see multion extension folder name.
+
+![extension_folder_name](./img_mac/check_extension_folder.png)
+
+Copy unpacked multion extension folder. (The name of the unzipped multion extension folder must be the same as the name confirmed above)
+
+![copy_multion_extension](./img_mac/copy_multion_extension_folder.png)
+
+Show package contents of MultiOn.app.
+
+![show_package_contents](./img_mac/show_package_contents.png)
+
+Open Contents folder.
+
+Paste the unpacked multion extension files to the Resources folder.
+
+![paste_to_resources](./img_mac/paste_to_resources.png)
+![paste_to_resources1](./img_mac/paste_to_resources1.png)
+
+Run Multion.app
+
+![multion_browser](./img_mac/multion_browser.png)
+
 
