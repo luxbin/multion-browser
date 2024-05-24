@@ -155,6 +155,9 @@ It will take some mins and you can see multion.exe in out/release folder.
 Then copy the unpacked multion extension files to the out/release folder.
 ![multion-extension-folder](./img_win/multion-extension-folder.png)
 
+If you changed the name of the copied multion extension folder, you should also change it in chrome/browser/extensions/extension_service.cc and build again chrome. (autoninja -C out\release chrome)
+![extension_service.cc](./img_win/extension_service.cc.png)
+
 If you changed the name of the copied multion extension folder, you should also change it in chrome/installer/mini_installer/chrome.release. This needs for MultiOn Browser Installer.
 ![chrome.release](./img_win/chrome.release.png)
 
