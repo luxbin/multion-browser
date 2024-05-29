@@ -101,13 +101,15 @@ You must get the successful build and you have to check build environment again.
 Run git command in chromium/src folder.
 
 ```
-$ git apply --check multion-macos.patch
+$ git apply --check /path/to/[patch file name for macos]
 ```
+
+For example: git apply --check /Users/admin/multion-macos.patch
 
 It must run without any errors.
 
 ```
-$ git apply multion-macos.patch
+$ git apply /path/to/[patch file name for macos]
 
 $ git status
 ```
@@ -122,21 +124,7 @@ It will take some mins and you can see MultiOn.app in out/release folder.
 
 # 9. Include the Mullion extension files in MultiOn.app
 
-We need to check what extension folder name is set in the source code.
-
-You can open extension_service.cc file in TextEdit.
-
-```
-chromium/src/chrome/browser/extensions/extension_service.cc
-```
-
-![extension_service.cc](./img_mac/extension_service.png)
-
-Then you find the string "../Resources" and can see multion extension folder name.
-
-![extension_folder_name](./img_mac/check_extension_folder.png)
-
-Copy unpacked multion extension folder. (The name of the unzipped multion extension folder must be the same as the name confirmed above)
+Copy unpacked multion extension folder. 
 
 ![copy_multion_extension](./img_mac/copy_multion_extension_folder.png)
 
@@ -146,7 +134,7 @@ Show package contents of MultiOn.app.
 
 Open Contents folder.
 
-Paste the unpacked multion extension files to the Resources folder.
+Paste the unpacked multion extension folder to the Resources folder.
 
 ![paste_to_resources](./img_mac/paste_to_resources.png)
 ![paste_to_resources1](./img_mac/paste_to_resources1.png)
@@ -156,3 +144,16 @@ Run Multion.app
 ![multion_browser](./img_mac/multion_browser.png)
 
 
+
+# _How to revert to the commit before applying the patch_?
+
+If the patch file has been modified and you need to revert back to the initial Chromium commit, do the following:
+
+```
+$ git add .
+$ git reset --hard HEAD
+```
+
+This will be reverted to the commit ID ecbf498e2027dad6dd44ef472b88ad59a0823bb8 that you initially checked out.
+
+Repeat again from step 8.

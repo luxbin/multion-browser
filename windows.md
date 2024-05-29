@@ -135,14 +135,17 @@ You must get the successful build and you have to check build environment again.
 Run git command in chromium/src folder.
 
 ```
-$ git apply --check multion-windows.patch
+$ git apply --check /path/to/[patch file name for windows]
 ```
+
+For example: git apply --check C:/multion-windows.patch
 
 It must run without any errors.
 
 ```
-$ git apply multion-windows.patch
+$ git apply /path/to/[patch file name for windows]
 ```
+
 After this, you can check the modified files with git status command.
 
 We need to build again with new patches.
@@ -155,12 +158,6 @@ It will take some mins and you can see multion.exe in out/release folder.
 Then copy the unpacked multion extension files to the out/release folder.
 ![multion-extension-folder](./img_win/multion-extension-folder.png)
 
-If you changed the name of the copied multion extension folder, you should also change it in chrome/browser/extensions/extension_service.cc and build again chrome. (autoninja -C out\release chrome)
-![extension_service.cc](./img_win/extension_service.cc.png)
-
-If you changed the name of the copied multion extension folder, you should also change it in chrome/installer/mini_installer/chrome.release. This needs for MultiOn Browser Installer.
-![chrome.release](./img_win/chrome.release.png)
-
 Now you run multion.exe so you can see MultiOn Browser with multion extension.
 
 # 12. Build Multion Browser Installer
@@ -172,3 +169,20 @@ $ autoninja -C out\release mini_installer
 After this, you can find the mini_installer.exe in out/release folder.
 
 mini_installer.exe is setup file for MultiOn Browser.
+
+
+
+
+
+# _How to revert to the commit before applying the patch_?
+
+If the patch file has been modified and you need to revert back to the initial Chromium commit, do the following:
+
+```
+$ git add .
+$ git reset --hard HEAD
+```
+
+This will be reverted to the commit ID ecbf498e2027dad6dd44ef472b88ad59a0823bb8 that you initially checked out.
+
+Repeat again from step 11.
