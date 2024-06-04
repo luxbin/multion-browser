@@ -80,6 +80,13 @@ blink_symbol_level = 0
 symbol_level = 0
 ```
 
+If you want to build for the Apple M Series (Apple Silicon), target_cpu must be set to "arm64".
+This ensures that the build system compiles the code specifically for the ARM64 architecture used by the Apple M1, M1 Pro, M1 Max, M1 Ultra, M2, and other Apple Silicon chips.
+
+```
+target_cpu = "arm64"
+```
+
 ![args.gn](./img_win/args.gn.png)
 
 # 7. Build chromium
