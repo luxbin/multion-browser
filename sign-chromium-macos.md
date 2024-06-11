@@ -3,9 +3,11 @@
 # 1. Install Apple's Certificate Authority certificates
 
 To sign a Chromium app on macOS, you need to download the "Developer ID - G2" and "Worldwide Developer Relations - G3" certificates from [Apple's Certificate Authority](https://www.apple.com/certificateauthority/).
+
 ![Apple's Certificate Authority](./img_mac_sign/download-apple-intermediate-certificates.png)
 
 You can install the two downloaded files by double-clicking on them.
+
 ![Install certificates](./img_mac_sign/apple-intermediate-certificates.png)
 
 Open Keychain Access.
@@ -21,7 +23,9 @@ You can see 2 certificates in Keychain Access.
 Request a Certificate From a Certificate Authority.
 
 ![Request a Certificate 01](./img_mac_sign/request-certificate-01.png)
+
 ![Request a Certificate 02](./img_mac_sign/request-certificate-02.png)
+
 ![Request a Certificate 03](./img_mac_sign/request-certificate-03.png)
 
 Generated CertificateSigningRequest.certSigningRequest in Desktop.
